@@ -1,0 +1,41 @@
+# --- OS Generated Files ---
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- Build and Dependency Folders ---
+node_modules/
+bower_components/
+dist/
+build/
+bin/
+obj/
+
+# --- Environment Variables (SENSITIVE) ---
+.env
+*.env.local
+.venv/
+env/
+venv/
+ENV/
+
+# --- Logs and Databases ---
+*.log
+npm-debug.log*
+yarn-error.log*
+*.sqlite
+
+# --- Editor Specific ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Language Specifics ---
+# Python
+__pycache__/
+*.py[cod]
+
+# Java/Compiled
+*.class
+*.jar
