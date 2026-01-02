@@ -39,3 +39,4 @@ __pycache__/
 # Java/Compiled
 *.class
 *.jar
+/src/generated/prisma
