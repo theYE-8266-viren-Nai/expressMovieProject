@@ -94,7 +94,7 @@ const main = async () => {
         })
         console.log(`Created movie : ${movie.title}`);
 
-        console.log("Seeding completed");
+        console.log("Seeding has completed");
     }
 }
 
