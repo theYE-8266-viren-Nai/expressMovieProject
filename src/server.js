@@ -2,7 +2,7 @@ import express from 'express';
 import { config } from 'dotenv';
 import { connectDB, disconnectDB } from './config/db.js';
 import authMiddleware from './middleware/authMiddleware.js';
-
+import cookieParser from 'cookie-parser';
 // Import Routes
 import movieRoutes from './routes/movieRoutes.js';
 import authRoutes from './routes/authRoutes.js';
@@ -16,6 +16,7 @@ const app = express();
 // Body parsing middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser()); 
 
 // Public routes (NO middleware)
 app.use("/auth", authRoutes);
