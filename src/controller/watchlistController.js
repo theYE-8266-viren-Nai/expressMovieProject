@@ -40,4 +40,76 @@ const addToWatchList = async (req, res) => {
         }
     })
 }
-export { addToWatchList }
+const deleteWatchList = async (req,res) => {
+    // Find watchlist item and verify ownership
+  const watchlistItem = await prisma.watchlistItem.findUnique({
+    where: { id: req.params.id },
+  });
+
+  if (!watchlistItem) {
+    return res.status(404).json({ error: "Watchlist item not found" });
+  }
+
+  // Ensure only owner can delete
+  if (watchlistItem.userId !== req.user.id) {
+    return res
+      .status(403)
+      .json({ error: "Not allowed to update this watchlist item" });
+  }
+
+  await prisma.watchlistItem.delete({
+    where: { id: req.params.id },
+  });
+
+  return res.status(200).json({
+    status: "success",
+    message : "removed from the watchlist"
+  });
+}
+const updateWatchList = async (req, res) => {
+    try {
+        const { status, rating, notes } = req.body;
+
+        // Find item first
+        const watchlistItem = await prisma.watchlistItem.findUnique({
+            where: { id: req.params.id }
+        });
+
+        if (!watchlistItem) {
+            return res.status(404).json({ 
+                error: "Watchlist item not found" 
+            });
+        }
+
+        // Check ownership
+        if (watchlistItem.userId !== req.user.id) {
+            return res.status(403).json({ 
+                error: "Not allowed to update this watchlist item" 
+            });
+        }
+
+        // Update with data
+        const updated = await prisma.watchlistItem.update({
+            where: { id: req.params.id },
+            data: {           // ← Required!
+                status,
+                rating,
+                notes,
+                updatedAt: new Date()  // Optional: update timestamp
+            }
+        });
+
+        return res.status(200).json({
+            status: "success",
+            message: "Watchlist updated",
+            item: updated
+        });
+
+    } catch (error) {
+        console.error("Update error:", error);
+        return res.status(500).json({ 
+            error: "Failed to update watchlist item" 
+        });
+    }
+};
+export { addToWatchList , deleteWatchList,  updateWatchList}

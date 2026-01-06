@@ -29,7 +29,7 @@ app.get("/hello", (req, res) => {
     res.json({ message: "Hello World" });
 });
 app.use("/movies", movieRoutes);
-app.use("/addToWatchList", watchList);
+app.use("/watchList", watchList);
 
 const PORT = 5000;
 const server = app.listen(PORT, () => {
