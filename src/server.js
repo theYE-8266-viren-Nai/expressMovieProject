@@ -8,6 +8,9 @@ import movieRoutes from './routes/movieRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import watchList from './routes/watchListRoutes.js';
 
+//import for the validation
+import { validateRequest } from './middleware/ValidateRequest.js';
+import { addToWatchlistSchema } from './validator/watchListValidator.js';
 config();
 connectDB();
 
@@ -29,7 +32,7 @@ app.get("/hello", (req, res) => {
     res.json({ message: "Hello World" });
 });
 app.use("/movies", movieRoutes);
-app.use("/watchList", watchList);
+app.use("/watchList", validateRequest(addToWatchlistSchema), watchList);
 
 const PORT = 5000;
 const server = app.listen(PORT, () => {
